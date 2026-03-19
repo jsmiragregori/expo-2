@@ -1,8 +1,10 @@
 import React from 'react';
 import { motion, useScroll, useTransform } from 'motion/react';
+import { useLanguage } from '../i18n';
 
 export const Hero = () => {
   const { scrollY } = useScroll();
+  const { t } = useLanguage();
   
   // Parallax and fade effects
   const y = useTransform(scrollY, [0, 500], [0, 200]);
@@ -31,7 +33,7 @@ export const Hero = () => {
         transition={{ delay: 2, duration: 1 }}
         className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2"
       >
-        <span className="text-[10px] uppercase tracking-[0.3em] font-mono opacity-50">Desliza para Explorar</span>
+        <span className="text-[10px] uppercase tracking-[0.3em] font-mono opacity-50">{t.hero.scroll}</span>
         <div className="w-px h-12 bg-white/20 relative overflow-hidden">
           <motion.div 
             animate={{ y: [0, 48] }}

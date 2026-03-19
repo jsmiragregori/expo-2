@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Menu, X } from 'lucide-react';
+import { useLanguage } from '../i18n';
+import { LanguageSelector } from './LanguageSelector';
 
 export const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -15,26 +18,31 @@ export const Navigation = () => {
   }, []);
 
   const menuItems = [
-    { name: 'Exposición', href: '#rooms' },
-    { name: 'Autora', href: '#author' },
-    { name: 'Contacto', href: '#contact' },
+    { name: t.nav.galeria, href: '#rooms' },
+    { name: t.nav.manifiesto, href: '#manifesto' },
+    { name: t.nav.contacto, href: '#contact' },
   ];
 
   return (
     <>
       <motion.nav
-        initial={{ y: -100 }}
-        animate={{ y: scrolled ? 0 : -100 }}
+        initial={{ y: 0 }}
+        animate={{ y: 0 }}
         className="fixed top-0 left-0 w-full z-50 px-6 lg:px-12 py-6 flex justify-between items-center mix-blend-difference"
       >
         <a href="#" className="font-display text-2xl uppercase tracking-tighter">Maisse</a>
-        <button 
-          onClick={() => setIsOpen(true)}
-          className="p-3 hover:opacity-70 transition-opacity min-w-[44px] min-h-[44px] flex items-center justify-center"
-          aria-label="Abrir menú de navegación"
-        >
-          <Menu size={24} />
-        </button>
+        <div className="flex items-center gap-8">
+          <div className="hidden md:block">
+            <LanguageSelector />
+          </div>
+          <button 
+            onClick={() => setIsOpen(true)}
+            className="p-3 hover:opacity-70 transition-opacity min-w-[44px] min-h-[44px] flex items-center justify-center"
+            aria-label="Abrir menú de navegación"
+          >
+            <Menu size={24} />
+          </button>
+        </div>
       </motion.nav>
 
       <AnimatePresence>
@@ -52,6 +60,10 @@ export const Navigation = () => {
             >
               <X size={32} />
             </button>
+            
+            <div className="absolute bottom-12 md:hidden">
+              <LanguageSelector />
+            </div>
 
             <ul className="flex flex-col items-center gap-8">
               {menuItems.map((item, i) => (
